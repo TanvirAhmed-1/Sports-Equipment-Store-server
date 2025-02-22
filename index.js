@@ -1,5 +1,5 @@
 const express = require('express');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const cors = require('cors');
 const port=process.env.PORT || 5000
 const app=express()
@@ -32,6 +32,7 @@ async function run() {
 
   const StorCollection=client.db("StoreBD").collection("Product");
 
+
 //   get product
 
 app.get("/products",async(req,res)=>{
@@ -45,6 +46,40 @@ app.get("/products",async(req,res)=>{
     const result=await StorCollection.insertOne(userdata)
     res.send(result);
   })
+
+//   update product
+app.get("/products/:id",async(req, res)=>{
+    const id=req.params.id
+  const query={_id: new ObjectId (id)}
+    const result=await StorCollection.findOne(query)
+    res.send(result)
+})
+
+app.put("/products/:id",async(req,res)=>{
+    const id=req.params.id
+    const data=req.body
+    const options = { upsert: true };
+    const filter = { _id: new ObjectId(id) };
+    const updateDoc = {
+        $set: {
+                image:data.image,
+                  itemName:data.itemName,
+                  categoryName:data.categoryName,
+                  description:data.description,
+                  price:data.price,
+                  rating:data.rating,
+                  customization:data.customization,
+                  processingTime:data.processingTime,
+                  stockStatus:data.stockStatus,
+                  userEmail:data.userEmail,
+                  userName:data.userName,
+        },
+  
+      };
+    
+      const result=await StorCollection.updateOne(filter,updateDoc,options)
+      res.send(result)
+})
 
 
 
