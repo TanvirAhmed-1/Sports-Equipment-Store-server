@@ -82,6 +82,30 @@ app.put("/products/:id",async(req,res)=>{
       res.send(result)
 })
 
+// email user data
+
+// app.get("/users:id",async(req,res)=>{
+//   const email=req.params.id
+//   console.log(email)
+//   const query={email}
+//   const result=await StorCollection.find(query)
+//   res.send(result)
+// })
+
+app.get("/users/:id", async (req, res) => {
+  try {
+    const email = req.params.id; 
+    console.log("Requested email:", email);
+
+    const query = { userEmail: email };  
+    const data = await StorCollection.find(query);  
+    const result=await data.toArray()
+    res.send(result);  
+  } catch (err) {
+    res.status(500).send({ error: "Internal Server Error" });  
+  }
+});
+
 
 // Product Delete
 
