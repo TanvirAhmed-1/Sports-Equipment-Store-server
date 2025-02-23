@@ -58,6 +58,7 @@ app.get("/products/:id",async(req, res)=>{
 app.put("/products/:id",async(req,res)=>{
     const id=req.params.id
     const data=req.body
+    console.log(id,data)
     const options = { upsert: true };
     const filter = { _id: new ObjectId(id) };
     const updateDoc = {
@@ -82,6 +83,15 @@ app.put("/products/:id",async(req,res)=>{
 })
 
 
+// Product Delete
+
+app.delete("/products/:id",async(req,res)=>{
+  const id=req.params.id
+  console.log(id)
+  const query={_id : new ObjectId(id)}
+  const result=await StorCollection.deleteOne(query)
+  res.send(result)
+})
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
