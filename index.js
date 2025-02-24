@@ -13,8 +13,6 @@ app.use(express.json());
 // eAocCbuMqN00Tvcv
 
 
-
-
 const uri = "mongodb+srv://store:eAocCbuMqN00Tvcv@cluster0.0p516.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -87,7 +85,7 @@ app.put("/products/:id",async(req,res)=>{
 
 
 app.get("/users/:id", async (req, res) => {
-  try {
+
     const email = req.params.id; 
     console.log( email);
 
@@ -95,9 +93,11 @@ app.get("/users/:id", async (req, res) => {
     const data =await StorCollection.find(query);  
     const result=await data.toArray()
     res.send(result);  
-  } catch (err) {
-    res.status(500).send({ error: "Internal Server Error" });  
-  }
+   
+  
+  // catch (err) {
+  //   res.status(500).send({ error: "Internal Server Error" });  
+  // }
 });
 
 
