@@ -5,7 +5,8 @@ const port=process.env.PORT || 5000
 const app=express()
 
 // middleWare
-
+app.use(cors());
+app.use(express.json());
 
 
 // store
@@ -82,7 +83,7 @@ app.put("/products/:id",async(req,res)=>{
       res.send(result)
 })
 
-// email user data
+// email user data api create
 
 
 app.get("/users/:id", async (req, res) => {
@@ -121,11 +122,7 @@ app.delete("/products/:id",async(req,res)=>{
 run().catch(console.dir);
 
 
-
-
-
-app.use(cors());
-app.use(express.json());
+// server run 
 
 app.get("/",(req,res)=>{
     res.send("The CURD is Running")
