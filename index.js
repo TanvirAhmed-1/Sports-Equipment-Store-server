@@ -60,7 +60,7 @@ app.get("/products/:id",async(req, res)=>{
 app.put("/products/:id",async(req,res)=>{
     const id=req.params.id
     const data=req.body
-    console.log(id,data)
+    // console.log(id,data)
     const options = { upsert: true };
     const filter = { _id: new ObjectId(id) };
     const updateDoc = {
@@ -89,7 +89,7 @@ app.put("/products/:id",async(req,res)=>{
 app.get("/users/:id", async (req, res) => {
 
     const email = req.params.id; 
-    console.log( email);
+    // console.log( email);
 
     const query = { userEmail: email };  
     const data =await StorCollection.find(query);  
@@ -103,7 +103,7 @@ app.get("/users/:id", async (req, res) => {
 
 app.delete("/products/:id",async(req,res)=>{
   const id=req.params.id
-  console.log(id)
+  // console.log(id)
   const query={_id : new ObjectId(id)}
   const result=await StorCollection.deleteOne(query)
   res.send(result)
