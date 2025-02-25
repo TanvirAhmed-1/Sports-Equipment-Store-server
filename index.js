@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config()
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const cors = require('cors');
 const port=process.env.PORT || 5000
@@ -8,12 +9,14 @@ const app=express()
 app.use(cors());
 app.use(express.json());
 
+// console.log(process.env.DB_USER)
+// console.log(process.env.DB_PASS)
 
-// store
-// eAocCbuMqN00Tvcv
 
 
-const uri = "mongodb+srv://store:eAocCbuMqN00Tvcv@cluster0.0p516.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.0p516.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -83,7 +86,6 @@ app.put("/products/:id",async(req,res)=>{
 
 // email user data api create
 
-
 app.get("/users/:id", async (req, res) => {
 
     const email = req.params.id; 
@@ -93,11 +95,7 @@ app.get("/users/:id", async (req, res) => {
     const data =await StorCollection.find(query);  
     const result=await data.toArray()
     res.send(result);  
-   
   
-  // catch (err) {
-  //   res.status(500).send({ error: "Internal Server Error" });  
-  // }
 });
 
 
